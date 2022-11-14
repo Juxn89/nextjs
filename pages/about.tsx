@@ -5,7 +5,7 @@ import { DarkLayout } from '../components/layout/DarkLayout';
 import { MainLayout } from '../components/layout/MainLayout';
 
 /*
-  Multiple layouts nested: https://nextjs.org/docs/basic-features/layouts
+  Multiple nested layouts: https://nextjs.org/docs/basic-features/layouts
 */
 
 export default function about() {
