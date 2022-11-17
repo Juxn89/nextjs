@@ -8,4 +8,6 @@ export interface IPokemonListResponse {
 export interface ISmallPokemon {
     name: string;
     url:  string;
+    id:   number;
+    img:  string;
 }
