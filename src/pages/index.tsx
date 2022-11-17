@@ -1,13 +1,34 @@
 import { NextPage } from 'next';
-import { Button } from '@nextui-org/react';
+import { GetStaticProps } from 'next'
+import {pokeAPI} from '@api/index';
 import { Layout } from '@components/layouts';
+import { IPokemonListResponse, ISmallPokemon } from '@interfaces/index';
 
-export const HomePage: NextPage = () => {
+type PokemonsProps = {
+  pokemons: ISmallPokemon[]
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {data} = await pokeAPI.get<IPokemonListResponse>('/pokemon?limit=151');
+
+  return {
+    props: {
+      pokemons: data.results
+    }
+  }
+}
+
+export const HomePage: NextPage<PokemonsProps> = ({pokemons}) => {
+  console.log(pokemons);
   return (
     <Layout title='List of pokemons'>
-      <Button color='success'>
-        Hello World :)
-      </Button>        
+      <ul>
+        {
+          pokemons.map((pokemon: ISmallPokemon) => (
+            <li>{pokemon.name}</li>
+          ))
+        }
+      </ul>  
     </Layout>
   )
 }

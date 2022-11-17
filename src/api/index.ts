@@ -1,0 +1,1 @@
+export {default as pokeAPI} from '@api/pokeAPI';
