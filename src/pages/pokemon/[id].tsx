@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react'
 import { Layout } from '@components/layouts'
 import pokeAPI from '@api/pokeAPI'
 import { IPokemon } from '@interfaces/index'
+import localFavorites from '@utils/localFavorites'
 
 type PokemonPageProps = {
     pokemon: IPokemon
@@ -33,8 +34,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
 
 const PokemonPage:NextPage<PokemonPageProps> = ({pokemon}) => {
+
+  useEffect(() => {
+    console.log('UseEffect...');
+  }, [])
+  
+
+  const onToogleFavorite = () => {
+    localFavorites.toogleFavorites(pokemon.id)
+  }
+
   return (
-    <Layout title='Pokemon'>
+    <Layout title={ pokemon.name }>
       <Grid.Container css={{ marginTop:'5px' }} gap={ 2 }>
         <Grid xs={ 12 } sm={ 4 }>
           <Card isHoverable css={{ padding: '30px' }}>
@@ -52,7 +63,7 @@ const PokemonPage:NextPage<PokemonPageProps> = ({pokemon}) => {
           <Card>
             <Card.Header css={{ display: 'flex', justifyContent: 'space-between' }}>
               <Text h1 transform='capitalize'> { pokemon.name } </Text>
-              <Button color='gradient' ghost> ⭐ Add to favorites</Button>
+              <Button color='gradient' ghost onClick={ onToogleFavorite }> ⭐ Add to favorites</Button>
             </Card.Header>
             <Card.Body>
               <Text size={30}>Sprites:</Text>

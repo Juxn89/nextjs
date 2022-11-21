@@ -1,0 +1,1 @@
+export { default as localFavorites } from '@utils/localFavorites'
