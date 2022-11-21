@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react'
 import { Layout } from '@components/layouts'
@@ -35,13 +35,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 const PokemonPage:NextPage<PokemonPageProps> = ({pokemon}) => {
 
+  const [isInFavorite, setIsInFavorite] = useState(localFavorites.existInFavorites(pokemon.id));
+
   useEffect(() => {
     console.log('UseEffect...');
   }, [])
   
 
   const onToogleFavorite = () => {
-    localFavorites.toogleFavorites(pokemon.id)
+    localFavorites.toogleFavorites(pokemon.id);
+    setIsInFavorite(!isInFavorite)
   }
 
   return (
@@ -63,7 +66,9 @@ const PokemonPage:NextPage<PokemonPageProps> = ({pokemon}) => {
           <Card>
             <Card.Header css={{ display: 'flex', justifyContent: 'space-between' }}>
               <Text h1 transform='capitalize'> { pokemon.name } </Text>
-              <Button color='gradient' ghost onClick={ onToogleFavorite }> ⭐ Add to favorites</Button>
+              <Button color='gradient' ghost={ !isInFavorite } onClick={ onToogleFavorite }> 
+                { isInFavorite ? '❌ Remove from favorites' : '⭐ Add to favorites' }
+              </Button>
             </Card.Header>
             <Card.Body>
               <Text size={30}>Sprites:</Text>

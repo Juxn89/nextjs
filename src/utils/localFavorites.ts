@@ -1,7 +1,11 @@
+const getFavorites = (): number[] => {
+    return JSON.parse(localStorage.getItem('favorites') || '[]');
+}
+
 const toogleFavorites = (id: number) => {
-    let favorites: number[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    let favorites: number[] = getFavorites();
     
-    if(favorites.includes(id)) {
+    if(existInFavorites(id)) {
         favorites = favorites.filter(pokeID => pokeID !== id);
     } else {
         favorites.push(id)
@@ -10,6 +14,14 @@ const toogleFavorites = (id: number) => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
+const existInFavorites = (id: number): boolean => {
+    if(typeof window === 'undefined') return false;
+    
+    const favorites: number[] = getFavorites()
+    return favorites.includes(id);
+}
+
 export default {
     toogleFavorites,
+    existInFavorites
 }

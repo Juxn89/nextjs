@@ -23,7 +23,7 @@ export const Navbar = () => {
             width={70}
             height={70}
         />
-        <NextLink href='/' passHref>          
+        <NextLink href='/' passHref legacyBehavior>          
           <Link>
             <Text color='white' h2>P</Text>
             <Text color='white' h3>okemon</Text>          
@@ -32,7 +32,7 @@ export const Navbar = () => {
 
         <Spacer css={ { flex: 1 } }/>
         
-        <NextLink href='/favorites' passHref>
+        <NextLink href='/favorites' passHref legacyBehavior>
           <Link>
             <Text color='white' h3>⭐ Favorites</Text>
           </Link>
