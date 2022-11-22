@@ -4,10 +4,10 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import confetti from 'canvas-confetti';
 
 import { Layout } from '@components/layouts'
-import pokeAPI from '@api/pokeAPI'
 import { IPokemon } from '@interfaces/index'
 import localFavorites from '@utils/localFavorites'
 import { PokemonDetail } from '@components/pokemon/';
+import { getPokemonInfo } from '@utils/index';
 
 type PokemonPageProps = {
     pokemon: IPokemon
@@ -27,11 +27,10 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
     const { params } = ctx;
     const { id } = params as { id: string };
-    const {data} = await pokeAPI.get<IPokemon>(`/pokemon/${id}`);
   
     return {
       props: {
-        pokemon: data
+        pokemon: await getPokemonInfo(id)
       }
     }
   }

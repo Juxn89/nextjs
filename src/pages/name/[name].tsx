@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { pokeAPI } from '@api/index';
 import { IPokemonDetail } from '../../interfaces/IPokemonDetail';
 import { IPokemonListResponse, Sprites } from '@interfaces/index';
-import { localFavorites } from '@utils/index';
+import { getPokemonInfo, localFavorites } from '@utils/index';
 import confetti from 'canvas-confetti';
 import { Layout } from '@components/layouts';
 import { PokemonDetail } from '@components/pokemon/';
@@ -31,23 +31,16 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
     const { params } = ctx;
     const { name } = params as {name: string};
-
-    const { data } = await  pokeAPI.get<IPokemonDetail>(`/pokemon/${ name }`)
-    const pokemon = { id: data.id, name: data.name, sprites: data.sprites }
+    
     return {
         props: {
-            pokemon
+            pokemon: await getPokemonInfo(name)
         }
     }
 }
 
 const PokemonByNamePage: NextPage<PokemonByNamePageProps> = ({pokemon}) => {
-    const [isInFavorite, setIsInFavorite] = useState(localFavorites.existInFavorites(pokemon.id));
-
-    useEffect(() => {
-      console.log('UseEffect...');
-    }, [])
-    
+    const [isInFavorite, setIsInFavorite] = useState(localFavorites.existInFavorites(pokemon.id));    
   
     const onToogleFavorite = () => {
       localFavorites.toogleFavorites(pokemon.id);
