@@ -11,7 +11,7 @@ export const NoFavorites = () => {
         height: 'calc(100vh - 100px)',
         justifyContent: 'center'
       }}>
-        <Text h1>There aren't favorites</Text>
+        <Text h1>There aren&apos;t favorites</Text>
         <Image 
           src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png'
           width={250}
@@ -19,6 +19,7 @@ export const NoFavorites = () => {
           css={ {
             opacity: 0.1
           }}
+          alt="There aren't favorites"
         />
       </Container>
   )
