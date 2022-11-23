@@ -1,17 +1,12 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-import '@styles/globals.css'
 import type { AppProps } from 'next/app'
-
-const BASIC_THEME = createTheme({
-	palette: {
-		mode: 'dark'
-	}
-});
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { DARK_THEME } from '@theme/index'
+import '@styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
 
   return (
-		<ThemeProvider theme={ BASIC_THEME }>
+		<ThemeProvider theme={ DARK_THEME }>
 			<CssBaseline />
 			<Component {...pageProps} />		
 		</ThemeProvider>
