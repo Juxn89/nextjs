@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { pokeAPI } from '@api/index';
-import { IPokemonDetail } from '../../interfaces/IPokemonDetail';
 import { IPokemonListResponse, Sprites } from '@interfaces/index';
 import { getPokemonInfo, localFavorites } from '@utils/index';
 import confetti from 'canvas-confetti';
