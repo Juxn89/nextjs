@@ -1,5 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { Drawer, Box, Typography, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import { UIContext } from '@context/ui/';
+
 import InboxRoundedIcon from '@mui/icons-material/InboxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 
@@ -7,12 +9,10 @@ import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 const MENU_ITEMS: string[] = ['Inbox', 'Starred', 'Send Email', 'Drafts']
 
 export const Sidebar: FC = () => {
-	const closeSidebarHandler = () => {
-
-	}
+	const { sideMenuOpen, closeSideMenu } = useContext(UIContext);
 
 	return (
-		<Drawer anchor='left' open={true} onClose= { closeSidebarHandler }>
+		<Drawer anchor='left' open={ sideMenuOpen } onClose= { closeSideMenu }>
 			<Box sx={{ width: 250 }}>
 				<Box sx={{ padding: '5px 10px' }}>
 					<Typography variant='h4'></Typography>

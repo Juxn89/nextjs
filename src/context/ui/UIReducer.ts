@@ -12,7 +12,7 @@ export const UIReducer = (state: UIState, action: UITypes): UIState => {
 				...state,
 				sideMenuOpen: true
 			}
-		case '[UI] Open Sidebar':
+		case '[UI] Close Sidebar':
 			return {
 				...state,
 				sideMenuOpen: false
