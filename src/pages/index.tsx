@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import { Layout } from "@components/layouts";
+import { EntryList } from "@components/ui";
 
 export default function HomePage() {
   return (
@@ -10,7 +11,7 @@ export default function HomePage() {
 						<CardHeader title="Pending"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
-							{ /* List of entries */ }
+							<EntryList />
 						</CardContent>
 					</Card>
 				</Grid>
