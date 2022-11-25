@@ -7,7 +7,7 @@ export default function HomePage() {
 			<Grid container spacing={2}>
 				<Grid item xs={12} sm={4}>
 					<Card sx={{ height: 'calc(100vh - 100px)' }}>
-						<CardHeader title="To Do"></CardHeader>
+						<CardHeader title="Pending"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
 							{ /* List of entries */ }
@@ -25,7 +25,7 @@ export default function HomePage() {
 				</Grid>
 				<Grid item xs={12} sm={4}>
 					<Card sx={{ height: 'calc(100vh - 100px)' }}>
-						<CardHeader title="Completed"></CardHeader>
+						<CardHeader title="Finished"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
 							{ /* List of entries */ }
