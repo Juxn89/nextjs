@@ -11,7 +11,7 @@ export default function HomePage() {
 						<CardHeader title="Pending"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
-							<EntryList />
+							<EntryList status="pending"/>
 						</CardContent>
 					</Card>
 				</Grid>
@@ -20,7 +20,7 @@ export default function HomePage() {
 						<CardHeader title="In progress"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
-							{ /* List of entries */ }
+							<EntryList status="in-progress"/>
 						</CardContent>
 					</Card>
 				</Grid>
@@ -29,7 +29,7 @@ export default function HomePage() {
 						<CardHeader title="Finished"></CardHeader>
 						<CardContent>
 							{ /* Addd new entry */ }
-							{ /* List of entries */ }
+							<EntryList status="finished"/>
 						</CardContent>
 					</Card>
 				</Grid>
