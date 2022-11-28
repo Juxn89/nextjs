@@ -1,14 +1,31 @@
-import {FC} from 'react'
+import {FC, DragEvent, useContext} from 'react'
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
 import { IEntry } from '@interfaces/intex';
+import { UIContext } from '@context/ui';
 
 type EntryCardProps = {
 	entry: IEntry
 }
 
 export const EntryCard: FC<EntryCardProps> = ({entry}) => {
+	const { startDragging, endDragging } = useContext(UIContext)
+
+	const onDragStart = (event: DragEvent<HTMLDivElement>) => {
+		startDragging()
+		event.dataTransfer.setData('text', entry._id)
+	}
+
+	const onDragEnd = () => {
+		endDragging()
+	}
+
 	return (
-		<Card sx={{ marginBottom: 1 }}>
+		<Card 
+			sx={{ marginBottom: 1 }} 
+			draggable
+			onDragStart={ onDragStart }
+			onDragEnd= { onDragEnd }
+		>
 			<CardActionArea>
 				<CardContent>
 					<Typography sx={{ whiteSpace: 'pre-line' }}>{ entry.description }</Typography>
