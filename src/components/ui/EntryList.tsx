@@ -1,7 +1,7 @@
 import {FC, useContext, useMemo, DragEvent} from 'react'
 import { Paper, List } from '@mui/material'
 import { EntryCard } from '@components/ui/'
-import { EntryStatus } from '@interfaces/intex'
+import { EntryStatus, IEntry } from '@interfaces/intex'
 import { EntriesContext } from '@context/entries'
 import { UIContext } from '@context/ui'
 import styles from '@components/ui/EntryList.module.css';
@@ -12,8 +12,8 @@ type EntryListProp = {
 
 export const EntryList: FC<EntryListProp> = ({ status }) => {
 	
-	const { entries } = useContext(EntriesContext)
-	const { isDragging } = useContext(UIContext)
+	const { entries, updateEntry } = useContext(EntriesContext)
+	const { isDragging, endDragging } = useContext(UIContext)
 
 	const entriesByStatus = useMemo( () => entries.filter(entry => entry.status === status), [entries])
 
@@ -23,6 +23,12 @@ export const EntryList: FC<EntryListProp> = ({ status }) => {
 
 	const onDropEntry = (event: DragEvent<HTMLDivElement>) => {
 		const id = event.dataTransfer.getData('text');
+		const entry: IEntry = entries.find(entry => entry._id === id)!;
+		
+		entry.status = status;
+
+		updateEntry(entry)
+		endDragging()
 	}
 
 	return (
