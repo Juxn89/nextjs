@@ -20,6 +20,7 @@
       "@context/*": ["context/*"],
       "@database/*": ["database/*"],
       "@interfaces/*": ["interfaces/*"],
+      "@models/*": ["models/*"],
       "@styles/*": ["styles/*"],
       "@theme/*": ["theme/*"]
     }
