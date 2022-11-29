@@ -1,7 +1,7 @@
 import {FC, useReducer} from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { EntriesContext, EntriesReducer } from '@context/entries/index';
-import { IEntry } from '@interfaces/intex';
+import { IEntry } from '@interfaces/index';
 
 type EntriesProviderProps = {
 	children: JSX.Element | JSX.Element[]

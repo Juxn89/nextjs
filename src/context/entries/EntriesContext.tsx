@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { IEntry } from '@interfaces/intex'
+import { IEntry } from '@interfaces/index'
 
 type EntriesContext = {
 	entries: IEntry[],

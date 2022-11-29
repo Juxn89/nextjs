@@ -1,7 +1,7 @@
 import {FC, useContext, useMemo, DragEvent} from 'react'
 import { Paper, List } from '@mui/material'
 import { EntryCard } from '@components/ui/'
-import { EntryStatus, IEntry } from '@interfaces/intex'
+import { EntryStatus, IEntry } from '@interfaces/index'
 import { EntriesContext } from '@context/entries'
 import { UIContext } from '@context/ui'
 import styles from '@components/ui/EntryList.module.css';

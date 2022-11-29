@@ -1,5 +1,5 @@
 import { EntriesState } from "@context/entries/EntriesProvider";
-import { IEntry } from "@interfaces/intex";
+import { IEntry } from "@interfaces/index";
 
 type EntriesActionType = 
 	| {type: '[Entries] Add Entry', payload: IEntry}

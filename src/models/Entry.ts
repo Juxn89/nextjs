@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { IEntry } from "@interfaces/intex";
+import { IEntry } from "@interfaces/index";
 
 const entrySchema = new Schema({
 	description: { type: String, require: true },
