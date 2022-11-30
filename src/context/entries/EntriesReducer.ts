@@ -4,6 +4,7 @@ import { IEntry } from "@interfaces/index";
 type EntriesActionType = 
 	| {type: '[Entries] Add Entry', payload: IEntry}
 	| {type: '[Entries] Update Entry', payload: IEntry}
+	| {type: '[Entries] Refresh Entries', payload: IEntry[]}
 
 export const EntriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState => {
 	switch (action.type) {
@@ -23,6 +24,11 @@ export const EntriesReducer = (state: EntriesState, action: EntriesActionType): 
 
 					return entry
 				})
+			}
+		case '[Entries] Refresh Entries':
+			return {
+				...state,
+				entries: [...action.payload]
 			}
 		default:
 			return state;
