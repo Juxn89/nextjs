@@ -14,6 +14,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse<EntriesResponseType>)
 			return getEntries(res);
 		case 'POST':
 			return postEntry(req, res);
+		case 'PUT':
+			return postEntry(req, res);
 		default:
 			return res.status(400).json({name: 'Enpoint doesn\'t exist'});
 	}
