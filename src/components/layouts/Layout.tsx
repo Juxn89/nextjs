@@ -5,7 +5,7 @@ import { Navbar, Sidebar } from '@components/ui'
 
 type LayoutProps = {
 	title?: string,
-	children: JSX.Element
+	children: JSX.Element | JSX.Element[]
 }
 
 export const Layout: FC<LayoutProps> = ({ title = 'OpenJira App', children }) => {

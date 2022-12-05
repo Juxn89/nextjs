@@ -36,7 +36,7 @@ export const EntriesProvider: FC<EntriesProviderProps> = ({children}) => {
 
 	const updateEntry = async ({ _id, description, status }: IEntry) => {
 		try {
-			const { data } = await entriesAPI.put<IEntry>(`/entries/${_id}_0`, { description, status });
+			const { data } = await entriesAPI.put<IEntry>(`/entries/${_id}`, { description, status });
 
 			dispatch({ type: '[Entries] Update Entry', payload: data })
 			
