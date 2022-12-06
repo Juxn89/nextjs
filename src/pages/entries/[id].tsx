@@ -1,15 +1,42 @@
-import React, { ChangeEvent, useMemo, useState } from 'react'
+import React, { ChangeEvent, FC, useMemo, useState } from 'react'
+import { GetServerSideProps } from 'next'
 import { Layout } from '@components/layouts'
+import { isValidObjectId } from 'mongoose';
 import { Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, 
 				 Grid, Radio, RadioGroup, TextField, capitalize, IconButton } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { EntryStatus } from '@interfaces/index';
-import { height, width } from '@mui/system';
 
 const VALID_STATUS: EntryStatus[] = [  'pending', 'in-progress', 'finished' ]
 
-const EntryPage = () => {
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time	
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+	const { params } = ctx;
+	const { id } = params as { id: string};
+
+	if(!isValidObjectId(id)) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false
+			}
+		}
+	}
+
+	return {
+		props: {
+			id
+		}
+	}
+}
+
+type EntryPageProps = {
+	id: string
+}
+
+const EntryPage: FC<EntryPageProps> = (props) => {
 
 	const [inputValue, setInputValue] = useState<string>('');
 	const [status, setStatus] = useState<EntryStatus>('pending');
