@@ -1,12 +1,12 @@
 import React, { ChangeEvent, FC, useMemo, useState } from 'react'
 import { GetServerSideProps } from 'next'
-import { Layout } from '@components/layouts'
-import { isValidObjectId } from 'mongoose';
 import { Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, 
-				 Grid, Radio, RadioGroup, TextField, capitalize, IconButton } from '@mui/material'
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { EntryStatus } from '@interfaces/index';
+	Grid, Radio, RadioGroup, TextField, capitalize, IconButton } from '@mui/material'
+	import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+	import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+	import { Layout } from '@components/layouts'
+import { EntryStatus, IEntry } from '@interfaces/index';
+import { dbEntries } from '@database/index';
 
 const VALID_STATUS: EntryStatus[] = [  'pending', 'in-progress', 'finished' ]
 
@@ -16,7 +16,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	const { params } = ctx;
 	const { id } = params as { id: string};
 
-	if(!isValidObjectId(id)) {
+	const entry = await dbEntries.getEntryById(id)
+
+	if( !entry ) {
 		return {
 			redirect: {
 				destination: '/',
@@ -27,19 +29,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 	return {
 		props: {
-			id
+			entry
 		}
 	}
 }
 
 type EntryPageProps = {
-	id: string
+	entry: IEntry
 }
 
-const EntryPage: FC<EntryPageProps> = (props) => {
+const EntryPage: FC<EntryPageProps> = ({entry}) => {
 
-	const [inputValue, setInputValue] = useState<string>('');
-	const [status, setStatus] = useState<EntryStatus>('pending');
+	const [inputValue, setInputValue] = useState<string>(entry.description);
+	const [status, setStatus] = useState<EntryStatus>(entry.status);
 	const [touched, setTouched] = useState<boolean>(false);
 
 	const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
@@ -57,11 +59,11 @@ const EntryPage: FC<EntryPageProps> = (props) => {
 	}
 
 	return (
-		<Layout title=''>
+		<Layout title={ `${inputValue.substring(0, 20)}...` }>
 			<Grid container justifyContent={'center'} sx={{ marginTop: 2 }}>
 				<Grid item xs={ 12 } sm={ 8 }  md={ 6 }>
 					<Card>
-						<CardHeader title={ `Entry: ${ inputValue }` } subheader={ `Created 8 minutes ago` }/>
+						<CardHeader title={ `Entry: ${ inputValue }` } subheader={ `Created at ${entry.createdAt} minutes ago` }/>
 						<CardContent>
 							<TextField 
 								sx={{ marginTop: 2, marginBottom: 1 }}
