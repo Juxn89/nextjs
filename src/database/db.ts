@@ -40,6 +40,8 @@ export const disconnect = async() => {
 	if(process.env.NODE_ENV === 'development') return
 	
 	if(MONGO_CONNECTION.isConenected !== MONGO_CONNECTION_STATUS.disconnected) return
+
+	MONGO_CONNECTION.isConenected = MONGO_CONNECTION_STATUS.disconnected
 	
 	await mongoose.disconnect()
 	console.log('Disconnected from MongoDB')

@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui
 import { IEntry } from '@interfaces/index';
 import { UIContext } from '@context/ui';
 import { useRouter } from 'next/router';
+import { dateFunctions } from '@utils/index';
 
 type EntryCardProps = {
 	entry: IEntry
@@ -38,7 +39,7 @@ export const EntryCard: FC<EntryCardProps> = ({entry}) => {
 					<Typography sx={{ whiteSpace: 'pre-line' }}>{ entry.description }</Typography>
 				</CardContent>
 				<CardActions sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}>
-					<Typography variant='body2'>30 mintus ago</Typography>
+					<Typography variant='body2'>{ dateFunctions.getFormatDistanceToNow(entry.createdAt) }</Typography>
 				</CardActions>
 			</CardActionArea>
 		</Card>

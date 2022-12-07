@@ -8,6 +8,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, FormControl, FormCo
 	import { EntriesContext } from '@context/entries';
 import { EntryStatus, IEntry } from '@interfaces/index';
 import { dbEntries } from '@database/index';
+import { dateFunctions } from '@utils/index';
 
 const VALID_STATUS: EntryStatus[] = [  'pending', 'in-progress', 'finished' ]
 
@@ -74,7 +75,7 @@ const EntryPage: FC<EntryPageProps> = ({entry}) => {
 			<Grid container justifyContent={'center'} sx={{ marginTop: 2 }}>
 				<Grid item xs={ 12 } sm={ 8 }  md={ 6 }>
 					<Card>
-						<CardHeader title={ `Entry: ${ inputValue }` } subheader={ `Created at ${entry.createdAt} minutes ago` }/>
+						<CardHeader title={ `Entry: ${ inputValue }` } subheader={ `Created: ${ dateFunctions.getFormatDistanceToNow(entry.createdAt) }` }/>
 						<CardContent>
 							<TextField 
 								sx={{ marginTop: 2, marginBottom: 1 }}
