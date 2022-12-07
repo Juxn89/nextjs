@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FC, useMemo, useState } from 'react'
+import React, { ChangeEvent, FC, useContext, useMemo, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, 
 	Grid, Radio, RadioGroup, TextField, capitalize, IconButton } from '@mui/material'
 	import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 	import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 	import { Layout } from '@components/layouts'
+	import { EntriesContext } from '@context/entries';
 import { EntryStatus, IEntry } from '@interfaces/index';
 import { dbEntries } from '@database/index';
 
@@ -40,6 +41,8 @@ type EntryPageProps = {
 
 const EntryPage: FC<EntryPageProps> = ({entry}) => {
 
+	const { updateEntry } = useContext(EntriesContext)
+
 	const [inputValue, setInputValue] = useState<string>(entry.description);
 	const [status, setStatus] = useState<EntryStatus>(entry.status);
 	const [touched, setTouched] = useState<boolean>(false);
@@ -55,7 +58,15 @@ const EntryPage: FC<EntryPageProps> = ({entry}) => {
 	}
 
 	const onSave = () => {
+		if(inputValue.trim().length === 0) return;
 
+		const updatedEntry: IEntry = {
+			...entry,
+			status,
+			description: inputValue
+		}
+
+		updateEntry(updatedEntry, true)
 	}
 
 	return (
