@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 import Head from 'next/head'
 import { Navbar } from '@components/ui'
 
-type LayoutProps = {
+interface ILayoutProps {
     children: JSX.Element | JSX.Element[]
 }
 
-export const Layout: FC<LayoutProps> = ({children}) => {
+export const Layout = ({children}: ILayoutProps) => {
   return (
     <>
         <Head>
