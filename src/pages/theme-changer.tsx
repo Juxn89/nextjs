@@ -1,13 +1,45 @@
-import React, { useState, ChangeEvent } from 'react'
-import { Layout } from '@components/layouts'
+import React, { useState, ChangeEvent, useEffect, FC } from 'react'
+import { GetServerSideProps } from 'next'
 import { Card, CardContent, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
+import Cookies from 'js-cookie'
+import { Layout } from '@components/layouts'
 
-const ThemeChangerPage = () => {
+type ThemeChangerProps = {
+  name: string,
+  theme: string,
+}
 
-  const [currentTheme, setCurrentTheme] = useState('light')
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { theme = 'pepe', name = 'No name' } = ctx.req.cookies;
+
+  return {
+    props: {
+      theme,
+      name
+    }
+  }
+}
+
+const ThemeChangerPage: FC<ThemeChangerProps> = (props) => {
+  const { theme } = props;
+
+  const [currentTheme, setCurrentTheme] = useState(theme)
+
+  useEffect(() => {
+    console.log(
+      localStorage.getItem('theme')
+    );
+  }, [])
+  
 
   const onThemeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCurrentTheme(event.target.value)
+    const newTheme = event.target.value;
+
+    setCurrentTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+
+    Cookies.set('theme', newTheme)
   }
 
   return (
