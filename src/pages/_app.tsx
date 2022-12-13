@@ -1,9 +1,11 @@
-import type { AppProps } from 'next/app'
+import { GetServerSideProps } from 'next'
+import type { AppContext, AppProps } from 'next/app'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { darkTheme } from '@theme/index'
 import '@styles/globals.css'
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, ...rest }: AppProps) {
+  console.log({...rest});
   return (
     <ThemeProvider theme={ darkTheme }>
       <CssBaseline>
@@ -11,4 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
       </CssBaseline>
     </ThemeProvider>
   )
+}
+
+
+App.getInitialProps = async (appContext: AppContext) => {
+  const cookies = appContext.ctx.req ? (appContext.ctx.req as any).cookies : {theme: 'light'};
+  console.log('getInitialProps:', cookies);
+  return cookies
 }
