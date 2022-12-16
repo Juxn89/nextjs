@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import Head from 'next/head'
+import { Navbar } from '@components/ui';
 
 interface ShopLayoutProps {
     children: JSX.Element | JSX.Element[]
@@ -20,8 +21,9 @@ export const ShopLayout: FC<ShopLayoutProps> = ({children, title, pageDescriptio
               imageFullUrl && ( <meta name='og:image' content={ imageFullUrl }/> )
             }
         </Head>
-        <nav>
 
+        <nav>
+            <Navbar />
         </nav>
 
 
