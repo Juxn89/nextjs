@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Card, CardActionArea, CardMedia, Grid } from '@mui/material'
+import { FC, useMemo, useState } from 'react';
+import { Box, Card, CardActionArea, CardMedia, Grid, Typography } from '@mui/material'
 import { IProduct } from '@interfaces/index';
 
 interface ProductCardProps {
@@ -7,13 +7,34 @@ interface ProductCardProps {
 }
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false)
+  
+  const productImage = useMemo(() => {
+    return isHovered ? `products/${ product.images[1] }` : `products/${ product.images[0] }`
+  }, [isHovered])
+
   return (
-  <Grid item xs={6} sm={4}>
-    <Card>
+    <Grid 
+      item xs={6} 
+      sm={4} 
+      onMouseEnter={ () => setIsHovered(true) } 
+      onMouseLeave={ () => setIsHovered(false) }
+    >
+      <Card>
         <CardActionArea>
-          <CardMedia component='img' image={ `products/${ product.images[0] }` } alt={ product.title }></CardMedia>
+          <CardMedia 
+            component='img' 
+            image={ productImage } 
+            alt={ product.title } 
+            className="fadeIn"
+            onLoad={ () => console.log('loaded') }
+          />
         </CardActionArea>
-    </Card>
-  </Grid>
+      </Card>
+      <Box sx={{ mt: 1 }} className="fadeIn">
+        <Typography fontWeight={700}>{ product.title }</Typography>
+        <Typography fontWeight={500}>{ `$${product.price}` }</Typography>
+      </Box>
+    </Grid>
   )
 }
