@@ -18,6 +18,7 @@
     "paths": {
       "@components/*": ["components/*"],
       "@database/*": ["database/*"],
+      "@interfaces/*": ["interfaces/*"],
       "@styles/*": ["styles/*"],
       "@themes/*": ["themes/*"]
     }
