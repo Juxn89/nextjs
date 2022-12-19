@@ -1,8 +1,9 @@
 import { NextPage } from "next"
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import { ShopLayout } from "@components/layouts"
-import { initialData } from "@database/products"
 import { ItemCounter, SlideShow } from "@components/ui";
+import { SizeSelector } from "@components/products";
+import { initialData } from "@database/products"
 import 'react-slideshow-image/dist/styles.css'
 
 const product = initialData.products[0];
@@ -11,9 +12,11 @@ const slug: NextPage = () => {
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
       <Grid container spacing={3}>
+
         <Grid item xs={12} sm={7}>
           <SlideShow images={ product.images }/>
         </Grid>
+
         <Grid item xs={12} sm={5}>
           <Box display={'flex'} flexDirection='column'>
             <Typography variant="h1" component='h1'>{ product.title }</Typography>
@@ -22,6 +25,7 @@ const slug: NextPage = () => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Quantity</Typography>
               <ItemCounter />
+              <SizeSelector sizes={ product.sizes } />
             </Box>
 
             <Button color="secondary" className="circular-btn">
@@ -36,6 +40,7 @@ const slug: NextPage = () => {
             </Box>
           </Box>
         </Grid>
+        
       </Grid>
     </ShopLayout>
   )
