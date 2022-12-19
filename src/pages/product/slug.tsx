@@ -2,7 +2,7 @@ import { NextPage } from "next"
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import { ShopLayout } from "@components/layouts"
 import { initialData } from "@database/products"
-import { SlideShow } from "@components/ui";
+import { ItemCounter, SlideShow } from "@components/ui";
 import 'react-slideshow-image/dist/styles.css'
 
 const product = initialData.products[0];
@@ -21,6 +21,7 @@ const slug: NextPage = () => {
             
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Quantity</Typography>
+              <ItemCounter />
             </Box>
 
             <Button color="secondary" className="circular-btn">
