@@ -12,7 +12,7 @@ const NotFoundPage = () => {
           sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
         >
           <Typography variant='h1' component='h1' fontSize={100} fontWeight={200}>404 |</Typography>
-          <Typography variant='h4' marginLeft={2}>We didn't find any page here </Typography>
+          <Typography variant='h4' marginLeft={2}>We didn&apos;t find any page here </Typography>
         </Box>
     </ShopLayout>
   )
