@@ -23,7 +23,7 @@ const LoginPage: NextPage = () => {
             </Button>
           </Grid>
           <Grid item xs={12} display='flex' justifyContent='center'>
-            Don't have an account? &nbsp;
+            Don&apos;t have an account? &nbsp;
             <NextLink href='/auth/register' passHref legacyBehavior>
               <Link underline='always'>
                 Sign up
