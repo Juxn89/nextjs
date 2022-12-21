@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { Chip, Grid, Link, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid/models'
+import { GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid/models'
 import { ShopLayout } from '@components/layouts'
 
 const columns: GridColDef[] = [
@@ -13,7 +13,7 @@ const columns: GridColDef[] = [
     headerName: 'Paid-up', 
     description: 'Show if the order has been paid-up', 
     width: 200, 
-    renderCell: (params: GridValueGetterParams) => {
+    renderCell: (params: GridRenderCellParams) => {
       return (
         params.row.paid 
           ? <Chip color='success' label='Paid-up' variant='outlined'/> 
@@ -26,7 +26,9 @@ const columns: GridColDef[] = [
     headerName: '', 
     width: 100,
     sortable: false,
-    renderCell: (params: GridValueGetterParams) => {
+    filterable: false,
+    hideable: false, 
+    renderCell: (params: GridRenderCellParams) => {
       return (
         <NextLink href={ `/orders/${params.row.id}` } passHref legacyBehavior>
           <Link underline="hover">
