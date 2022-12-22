@@ -19,6 +19,7 @@
       "@components/*": ["components/*"],
       "@database/*": ["database/*"],
       "@interfaces/*": ["interfaces/*"],
+      "@models/*": ["models/*"],
       "@styles/*": ["styles/*"],
       "@themes/*": ["themes/*"]
     }
