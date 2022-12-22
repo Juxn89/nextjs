@@ -14,7 +14,7 @@ const productSchema = new Schema({
     } 
   }],
   slug: { type: String, require: true, unique: true },
-  tags: { type: String },
+  tags: [{ type: String }],
   title: { type: String, require: true },
   type: { 
     type: String,
@@ -36,3 +36,5 @@ const productSchema = new Schema({
 })
 
 const Product: Model<IProduct> = mongoose.models.Product || model('Product', productSchema)
+
+export default Product

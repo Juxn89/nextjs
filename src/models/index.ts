@@ -1,1 +1,1 @@
-export * from '@models/Product'
+export { default as Product } from '@models/Product'
