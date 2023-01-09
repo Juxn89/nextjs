@@ -21,6 +21,7 @@
       "@interfaces/*": ["interfaces/*"],
       "@models/*": ["models/*"],
       "@styles/*": ["styles/*"],
+      "@hooks/*": ["hooks/*"],
       "@themes/*": ["themes/*"]
     }
   },
