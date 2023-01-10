@@ -1,14 +1,42 @@
-import { NextPage } from "next"
+import { GetServerSideProps, NextPage } from "next"
+import { useRouter } from "next/router";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import { ShopLayout } from "@components/layouts"
 import { ItemCounter, SlideShow } from "@components/ui";
 import { SizeSelector } from "@components/products";
-import { initialData } from "@database/products"
+import { useProduct } from '@hooks/index';
+import { IProduct } from '@interfaces/index';
 import 'react-slideshow-image/dist/styles.css'
+import { dbProducts } from "@database/index";
 
-const product = initialData.products[0];
+interface IProductPageProps {
+  product: IProduct
+}
 
-const slug: NextPage = () => {
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { params } = ctx;
+  const { slug = '' } = params as { slug: string };
+
+  const product = await dbProducts.getProductBySlug(slug)
+
+  if(!product) return { 
+    redirect: {
+      destination: '/',
+      permanent: false
+    }
+  };
+
+  return {
+    props: {
+      product
+    }
+  }
+}
+
+const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
+
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
       <Grid container spacing={3}>
@@ -46,4 +74,4 @@ const slug: NextPage = () => {
   )
 }
 
-export default slug
+export default ProductPage
