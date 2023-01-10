@@ -12,7 +12,9 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false)
   
   const productImage = useMemo(() => {
-    return isHovered ? `products/${ product.images[1] }` : `products/${ product.images[0] }`
+    return isHovered 
+      ? `/products/${ product.images[1] }` 
+      : `/products/${ product.images[0] }`
   }, [isHovered])
 
   return (
