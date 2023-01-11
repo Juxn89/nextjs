@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState, KeyboardEvent } from "react"
 import { useRouter } from "next/router"
 import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, 
          ListItemText, ListSubheader } from "@mui/material"
@@ -11,9 +11,21 @@ export const SideMenu = () => {
   const router = useRouter()
   const { isMenuOpen, toggleSideMenu } = useContext(UIContext)
 
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
   const navigateTo = (url: string) => {
     toggleSideMenu()
     router.push(url)
+  }
+
+  const onSearchTerm = () => {
+    if( searchTerm.trim().length === 0 ) return;
+
+    navigateTo(`/search/${ searchTerm }`)
+  }
+
+  const handlerSearchTermEnter = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    return event.key === 'Enter' ? onSearchTerm() : null;
   }
 
   return (
@@ -29,10 +41,13 @@ export const SideMenu = () => {
                     <Input
                         type='text'
                         placeholder="Search..."
+                        value={ searchTerm }
+                        onChange={ (e) => setSearchTerm(e.target.value) }
+                        onKeyUp={ handlerSearchTermEnter }
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                aria-label="toggle password visibility"
+                                  onClick={ onSearchTerm }
                                 >
                                  <SearchOutlined />
                                 </IconButton>
