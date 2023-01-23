@@ -1,15 +1,15 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ShopLayout } from '@components/layouts/ShopLayout';
 import { ProductList } from '@components/products';
-import { FullScreenLoading } from '@components/ui';
-import { useProduct } from '@hooks/index';
 import { dbProducts } from '@database/index';
 import { IProduct } from '@interfaces/products';
 
 interface ISearchPageProps {
-  products: IProduct[]
+  products: IProduct[],
+  foundProducts: boolean,
+  query: string
 }
 
 // You should use getServerSideProps when:
@@ -28,24 +28,36 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   
   let products = await dbProducts.getProductByTerm(query)
+  const foundProducts = products.length > 0;
+
+  if(!foundProducts) {
+    products = await dbProducts.getAllProducts();
+  }
 
   return {
     props: {
-      products
+      products,
+      foundProducts,
+      query
     }
   }
 }
 
-const SearchPage: NextPage<ISearchPageProps> = ({ products }) => {
+const SearchPage: NextPage<ISearchPageProps> = ({ products, foundProducts, query }) => {
   const router = useRouter()
-  const { query } = router.query
 
   return (
     <ShopLayout title={'Teslo-Shop - Search'} pageDescription={'Find the best Teslo\'s products here'}>
       <Typography variant='h1' component='h1'>Search product</Typography>
-      <Typography variant='h2' sx={{ marginBottom: 1 }}>
-        Result for <strong>{`"${query}"`}</strong>
-      </Typography>
+      {
+        foundProducts
+          ? <Typography variant='h2' sx={{ marginBottom: 1 }}>Result for <strong>{`"${query}"`}</strong></Typography>
+          : <Box display='flex'>
+              <Typography variant='h2' sx={{ mb: 1 }}>{`We didn't find any product`}</Typography>
+              <Typography variant='h2' sx={{ ml: 1 }} color='secondary'>{query}</Typography>
+            </Box>
+      }
+      
       
       <ProductList products={ products }/>
 
