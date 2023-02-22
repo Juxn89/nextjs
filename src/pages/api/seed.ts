@@ -1,5 +1,5 @@
-import { db, seedDatabase } from "@database/index";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { db, seedDatabase } from "@database/index";
 import { Product } from '@models/index';
 
 type ResponseType = {
