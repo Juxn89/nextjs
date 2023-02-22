@@ -1,13 +1,18 @@
+import { useState } from 'react';
 import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next"
 import { useRouter } from "next/router";
+
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
+
 import { ShopLayout } from "@components/layouts"
 import { ItemCounter, SlideShow } from "@components/ui";
 import { SizeSelector } from "@components/products";
+
 import { useProduct } from '@hooks/index';
-import { IProduct } from '@interfaces/index';
-import 'react-slideshow-image/dist/styles.css'
+import { ICartProduct, IProduct, ValidSizes } from '@interfaces/index';
 import { dbProducts } from "@database/index";
+
+import 'react-slideshow-image/dist/styles.css'
 
 interface IProductPageProps {
   product: IProduct
@@ -80,6 +85,24 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
 
+  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
+    _id: product._id,
+    image: product.images[0],
+    price: product.price,
+    size: undefined,
+    slug: product.slug,
+    title: product.title,
+    gender: product.gender,
+    quantity: 1
+  });
+
+  const onSelectedSize = (size: ValidSizes) => {
+    setTempCartProduct(currentProduct => ({
+      ...currentProduct,
+      size
+    }));
+  }
+
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
       <Grid container spacing={3}>
@@ -96,14 +119,22 @@ const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Quantity</Typography>
               <ItemCounter />
-              <SizeSelector sizes={ product.sizes } />
+              <SizeSelector 
+                sizes={ product.sizes } 
+                selectedSize={ tempCartProduct.size }
+                onSelectedSize={ onSelectedSize }
+              />
             </Box>
 
             {
               (product.inStock > 0) 
                 ? (
                   <Button color="secondary" className="circular-btn">
-                    Add to cart
+                    {
+                      tempCartProduct.size
+                        ? 'Add to cart'
+                        : 'Select a size'
+                    }
                   </Button>
                 )
                 : (

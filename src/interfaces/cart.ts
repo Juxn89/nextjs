@@ -4,7 +4,7 @@ export interface ICartProduct {
   _id: string;
   image: string;
   price: number;
-  size: ValidSizes;
+  size?: ValidSizes;
   slug: string;
   title: string;
   gender: 'men'|'women'|'kid'|'unisex';
