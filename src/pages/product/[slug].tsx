@@ -99,11 +99,17 @@ const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
               <SizeSelector sizes={ product.sizes } />
             </Box>
 
-            <Button color="secondary" className="circular-btn">
-              Add to cart
-            </Button>
-
-            <Chip label="Not in stock" color="error" variant="outlined"/>
+            {
+              (product.inStock > 0) 
+                ? (
+                  <Button color="secondary" className="circular-btn">
+                    Add to cart
+                  </Button>
+                )
+                : (
+                  <Chip label="Currently unavailable" color="error" variant="outlined"/>
+                )
+            }
 
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle2">Description</Typography>
