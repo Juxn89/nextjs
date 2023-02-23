@@ -8,7 +8,10 @@ type CartActionType =
 export const CartReducer = (state: CartState, action: CartActionType) => {
   switch (action.type) {
     case '[CART] - LoadCart from cookies | storage':
-      return { ...state }
+      return { 
+        ...state,
+        cart: [...action.payload]
+      }
     case '[CART] - Update products in cart':
       return { 
         ...state,
