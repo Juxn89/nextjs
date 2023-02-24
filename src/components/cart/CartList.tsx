@@ -1,31 +1,37 @@
-import React, { FC } from 'react'
+import { useContext, useState } from 'react';
+import React, { FC, useEffect } from 'react'
 import NextLink from 'next/link'
-import { initialData } from '@database/products';
+
 import { Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { ItemCounter } from '@components/ui';
 
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2]
-]
+import { ItemCounter } from '@components/ui';
+import { CartContext } from '@context/index';
+import { ICartProduct } from '../../interfaces/cart';
 
 interface ICartListProps {
   isEditable?: boolean;
 }
 
 export const CartList: FC<ICartListProps> = ({ isEditable = false }) => {
+
+  const { cart, updateQuantity } = useContext(CartContext);
+
+  const updateProductQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
+    product.quantity += newQuantityValue;
+    updateQuantity(product);
+  }
+
   return (
     <>
       {
-        productsInCart.map(product => (
-          <Grid key={product.slug} container spacing={2} sx={{ mb: 1 }}>
+        cart.map(product => (
+          <Grid key={product.slug + product.size} container spacing={2} sx={{ mb: 1 }}>
             <Grid item xs={3}>
-              <NextLink href={'/product/slug'} passHref legacyBehavior>
+              <NextLink href={`/product/${product.slug}`} passHref legacyBehavior>
                 <Link>
                   <CardActionArea>
-                    <CardMedia image={ `/products/${product.images[0]}` } component='img' sx={{ borderRadius: '5px' }}/>
+                    <CardMedia image={ `/products/${product.image}` } component='img' sx={{ borderRadius: '5px' }}/>
                   </CardActionArea>
                 </Link>
               </NextLink>
@@ -33,15 +39,21 @@ export const CartList: FC<ICartListProps> = ({ isEditable = false }) => {
             <Grid item xs={7}>
               <Box display='flex' flexDirection='column'>                
                 <Typography variant='body1' >{ product.title }</Typography>
-                <Typography variant='body1' >Size: <strong>M</strong> </Typography>
+                <Typography variant='body1' >Size: <strong>{ product.size }</strong> </Typography>
 
                 {
-                  isEditable ? <ItemCounter /> : <Typography variant='h5'>Not editable</Typography>
+                  isEditable 
+                    ? <ItemCounter 
+                        currentValue={product.quantity} 
+                        updateQuantity={ (value) => updateProductQuantityValue(product, value) } 
+                        maxValue={ 10 } 
+                      /> 
+                    : <Typography variant='h5'>Not editable</Typography>
                 }
               </Box>
             </Grid>
             <Grid item xs={2} display='flex' alignItems='center' flexDirection='column'>
-              <Typography variant='subtitle1'>{ `$${ product.price }` }</Typography>
+              <Typography variant='subtitle1'>{ `$${ product.price * product.quantity }` }</Typography>
               {
                 isEditable &&
                 (

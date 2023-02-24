@@ -3,7 +3,9 @@ import { ICartProduct } from '@interfaces/index';
 
 interface ContextProps {
   cart: ICartProduct[],
-  addProductToCard: (product: ICartProduct) => void
+  addProductToCart: (product: ICartProduct) => void,
+  loadProductCart: () => ICartProduct[],
+  updateQuantity: (product: ICartProduct) => void
 }
 
 export const CartContext = createContext({} as ContextProps)

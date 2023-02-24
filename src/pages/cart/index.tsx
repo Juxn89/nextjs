@@ -8,7 +8,7 @@ const CartPage = () => {
         <Typography variant="h1" component="h1">Shop cart</Typography>
         <Grid container>
           <Grid item xs={12} sm={7}>
-            <CartList />
+            <CartList isEditable={ true }/>
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className='summary-card'>

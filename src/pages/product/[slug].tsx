@@ -87,7 +87,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
 
   const router = useRouter();
-  const { addProductToCard } = useContext(CartContext);
+  const { addProductToCart } = useContext(CartContext);
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: product._id,
@@ -123,7 +123,7 @@ const ProductPage: NextPage<IProductPageProps> = ({ product }) => {
   const onAddProduct = () => {
     if(tempCartProduct.size === undefined) return;
 
-    addProductToCard(tempCartProduct);
+    addProductToCart(tempCartProduct);
 
     router.push('/cart')
   }
