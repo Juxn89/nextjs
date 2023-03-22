@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Grid, Typography } from '@mui/material';
+import { CartContext } from '@context/index';
 
 export const OrderSummary = () => {
+  const { cart } = useContext(CartContext);
+
   return (
     <Grid container>
       <Grid item xs={6}>
         <Typography>Quantity Items</Typography>
       </Grid>
       <Grid item xs={6} display='flex' justifyContent='end'>
-        <Typography>3</Typography>
+        <Typography>{ cart.length }</Typography>
       </Grid>
 
       <Grid item xs={6}>
         <Typography>Sub-total</Typography>
       </Grid>
       <Grid item xs={6} display='flex' justifyContent='end'>
-        <Typography>{ `$${ 155.36 }` }</Typography>
+        <Typography>{ `$${ 0 }` }</Typography>
       </Grid>
 
       <Grid item xs={6}>

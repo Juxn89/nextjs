@@ -7,7 +7,7 @@ import { Box } from '@mui/system';
 
 import { ItemCounter } from '@components/ui';
 import { CartContext } from '@context/index';
-import { ICartProduct } from '../../interfaces/cart';
+import { ICartProduct } from '@interfaces/index';
 
 interface ICartListProps {
   isEditable?: boolean;
@@ -15,7 +15,7 @@ interface ICartListProps {
 
 export const CartList: FC<ICartListProps> = ({ isEditable = false }) => {
 
-  const { cart, updateQuantity } = useContext(CartContext);
+  const { cart, updateQuantity, removeProductCart } = useContext(CartContext);
 
   const updateProductQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
     product.quantity += newQuantityValue;
@@ -57,7 +57,7 @@ export const CartList: FC<ICartListProps> = ({ isEditable = false }) => {
               {
                 isEditable &&
                 (
-                  <Button variant='text' color='secondary'>
+                  <Button variant='text' color='secondary' onClick={ () => removeProductCart(product) }>
                     Remove
                   </Button>
                 )

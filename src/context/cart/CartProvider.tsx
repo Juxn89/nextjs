@@ -1,22 +1,29 @@
 import { FC, useEffect, useReducer } from 'react';
-import { ICartProduct } from '@interfaces/index'
-import { CartContext, CartReducer } from 'context/cart/index'
 import CookieJS from 'js-cookie';
+import { CartContext, CartReducer } from 'context/cart/index'
+import { ICartProduct, IOrderSummary } from '@interfaces/index'
 
 type CartProviderProps = {
   children: React.ReactNode
 }
 
 export interface CartState {
-  cart: ICartProduct[]
+  cart: ICartProduct[],
+  summary: IOrderSummary
 }
 
 const INITIAL_STATE: CartState = {
-  cart: []
+  cart: [],
+  summary: {
+    numberOfItems: 0,
+    subTotal: 0,
+    taxes: 0,
+    total: 0
+  }
 }
 
 export const CartProvider: FC<CartProviderProps> = ({children}) => {
-  const [state, dispatch] = useReducer(CartReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(CartReducer, INITIAL_STATE)
 
   useEffect(() => {
     try {
@@ -30,6 +37,20 @@ export const CartProvider: FC<CartProviderProps> = ({children}) => {
   useEffect(() => {
     CookieJS.set('cart', JSON.stringify(state.cart))
   }, [state.cart])
+
+  useEffect(() => {
+    const numberOfItems = state.cart.reduce( (prev, curr) => prev + curr.quantity, 0 );
+    const subTotal = state.cart.reduce( (prev, curr) => prev + (curr.quantity * curr.price) , 0);
+    const taxes = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0) * subTotal
+    const total = (subTotal + taxes);
+
+    const orderSummary = {
+      numberOfItems,
+      subTotal,
+      taxes,
+      total
+    }
+  }, [state.cart]);
   
 
   const addProductToCart = (product: ICartProduct) => {
@@ -55,9 +76,13 @@ export const CartProvider: FC<CartProviderProps> = ({children}) => {
   const updateQuantity = (product: ICartProduct) => {
     dispatch({ type: '[CART] - Change product quantity in cart', payload: product })
   }
+
+  const removeProductCart = (product: ICartProduct) => {
+    dispatch({ type: '[CART] - Delete product in cart', payload: product })
+  }
   
   return (
-    <CartContext.Provider value={{ ...state, addProductToCart, loadProductCart, updateQuantity }}>
+    <CartContext.Provider value={{ ...state, addProductToCart, loadProductCart, updateQuantity, removeProductCart }}>
       { children }
     </CartContext.Provider>
   );
